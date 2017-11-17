@@ -9,6 +9,8 @@
 <body>
 	<v:menu />
 	<h1>Filiaal toevoegen</h1>
-	Hier komen later de invoervelden van het filiaal ...
+	<form method='post' action='<c:url value="/filialen"/>'>
+	  <input type='submit' value='Toevoegen'>
+	</form>
 </body>
 </html>

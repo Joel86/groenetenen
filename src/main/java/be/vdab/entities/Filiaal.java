@@ -13,6 +13,7 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import be.vdab.valueobjects.Adres;
@@ -20,7 +21,7 @@ import be.vdab.valueobjects.Adres;
 public class Filiaal implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long id;
-	@NotBlank @Length(min = 1, max = 50)
+	@NotBlank @Length(min = 1, max = 50) @SafeHtml
 	private String naam;
 	private boolean hoofdFiliaal;
 	@NumberFormat(style = Style.NUMBER)

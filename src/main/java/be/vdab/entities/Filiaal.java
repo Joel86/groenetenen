@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -34,6 +35,8 @@ public class Filiaal implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@Version
+	private long versie;
 	@NotBlank @Length(min = 1, max = 50) @SafeHtml
 	private String naam;
 	private boolean hoofdFiliaal;
@@ -100,6 +103,12 @@ public class Filiaal implements Serializable {
 	}
 	public void setAdres(Adres adres) {
 		this.adres = adres;
+	}
+	public long getVersie() {
+		return versie;
+	}
+	public void setVersie(long versie) {
+		this.versie = versie;
 	}
 	public Set<Werknemer> getWerknemers() {
 		return Collections.unmodifiableSet(werknemers);

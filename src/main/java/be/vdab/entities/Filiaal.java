@@ -113,4 +113,7 @@ public class Filiaal implements Serializable {
 	public Set<Werknemer> getWerknemers() {
 		return Collections.unmodifiableSet(werknemers);
 	}
+	public void afschrijven() {
+		this.waardeGebouw = BigDecimal.ZERO;
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import be.vdab.datasource.DataSourceConfig;
 import be.vdab.repositories.RepositoriesConfig;
+import be.vdab.restclients.RestClientsConfig;
 import be.vdab.restservices.RestControllersConfig;
 import be.vdab.services.ServicesConfig;
 
@@ -20,7 +21,7 @@ public class Initializer
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class<?>[] {RepositoriesConfig.class, ServicesConfig.class, 
-			DataSourceConfig.class};
+			DataSourceConfig.class, RestClientsConfig.class};
 	}
 	@Override
 	protected Class<?>[] getServletConfigClasses() {

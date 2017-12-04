@@ -43,6 +43,7 @@ class FiliaalController {
 			"redirect:/filialen/{id}?optimisticlockingexception=true";
 	private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven";
 	private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/";
+	private static final String PER_ID_VIEW = "filialen/perid";
 	private final FiliaalService filiaalService;
 	FiliaalController(FiliaalService filiaalService) {
 		this.filiaalService = filiaalService;
@@ -145,6 +146,10 @@ class FiliaalController {
 		}
 		filiaalService.afschrijven(afschrijvenForm.getFilialen());
 		return new ModelAndView(REDIRECT_NA_AFSCHRIJVEN);
+	}
+	@GetMapping("perid")
+	String findById() {
+		return PER_ID_VIEW;
 	}
 	@InitBinder("postcodeReeks")
 	void initBinderPostcodeReeks(WebDataBinder binder) {

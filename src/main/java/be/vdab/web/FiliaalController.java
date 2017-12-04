@@ -2,6 +2,7 @@ package be.vdab.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -70,11 +71,12 @@ class FiliaalController {
 		return VERWIJDERD_VIEW;
 	}
 	@PostMapping
-	String create(@Valid Filiaal filiaal, BindingResult bindingResult) {
+	String create(@Valid Filiaal filiaal, BindingResult bindingResult, 
+			HttpServletRequest request) {
 		if(bindingResult.hasErrors()) {
 			return TOEVOEGEN_VIEW;
 		}
-		filiaalService.create(filiaal);
+		filiaalService.create(filiaal, request.getRequestURL().toString());
 		return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 	@PostMapping("{filiaal}/verwijderen")

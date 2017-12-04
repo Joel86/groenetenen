@@ -82,7 +82,7 @@ class DefaultFiliaalService implements FiliaalService {
 		filialen.forEach(filiaal -> filiaal.afschrijven());
 	}
 	@Override
-	@Scheduled(/*cron = "0 0 1 * * *"*/ fixedRate=60000)
+	@Scheduled(cron = "0 0 1 * * *")
 	public void aantalFilialenMail() {
 		mailSender.aantalFilialenMail(filiaalRepository.count());
 	}

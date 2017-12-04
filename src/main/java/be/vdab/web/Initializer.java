@@ -7,6 +7,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import be.vdab.datasource.DataSourceConfig;
+import be.vdab.jms.JmsConfig;
 import be.vdab.mail.MailConfig;
 import be.vdab.repositories.RepositoriesConfig;
 import be.vdab.restclients.RestClientsConfig;
@@ -22,7 +23,8 @@ public class Initializer
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class<?>[] {RepositoriesConfig.class, ServicesConfig.class, 
-			DataSourceConfig.class, RestClientsConfig.class, MailConfig.class};
+			DataSourceConfig.class, RestClientsConfig.class, MailConfig.class, 
+			JmsConfig.class};
 	}
 	@Override
 	protected Class<?>[] getServletConfigClasses() {

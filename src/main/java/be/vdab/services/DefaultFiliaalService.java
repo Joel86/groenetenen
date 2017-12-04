@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import be.vdab.entities.Filiaal;
 import be.vdab.exceptions.FiliaalHeeftNogWerknemersException;
@@ -16,10 +19,12 @@ import be.vdab.valueobjects.PostcodeReeks;
 class DefaultFiliaalService implements FiliaalService {
 	private final FiliaalRepository filiaalRepository;
 	private final MailSender mailSender;
+ 	private final JmsMessagingTemplate jmsMessagingTemplate;
 	DefaultFiliaalService(FiliaalRepository filiaalRepository, 
-			MailSender mailSender) {
+			MailSender mailSender, JmsMessagingTemplate jmsMessagingTemplate) {
 		this.filiaalRepository = filiaalRepository;
 		this.mailSender = mailSender;
+		this.jmsMessagingTemplate = jmsMessagingTemplate;
 	}
 	@Override
 	@ModifyingTransactionalServiceMethod
@@ -27,6 +32,9 @@ class DefaultFiliaalService implements FiliaalService {
 		filiaalRepository.save(filiaal);
 		mailSender.nieuwFiliaalMail(filiaal, 
 				urlAlleFilialen + '/' + filiaal.getId());
+		MessageBuilder<String> builder = 
+				MessageBuilder.withPayload(urlAlleFilialen + '/' + filiaal.getId());
+		jmsMessagingTemplate.send(builder.build());
 	}
 	@Override
 	public Optional<Filiaal> read(long id) {
@@ -72,5 +80,10 @@ class DefaultFiliaalService implements FiliaalService {
 	@ModifyingTransactionalServiceMethod
 	public void afschrijven(List<Filiaal> filialen) {
 		filialen.forEach(filiaal -> filiaal.afschrijven());
+	}
+	@Override
+	@Scheduled(/*cron = "0 0 1 * * *"*/ fixedRate=60000)
+	public void aantalFilialenMail() {
+		mailSender.aantalFilialenMail(filiaalRepository.count());
 	}
 }
